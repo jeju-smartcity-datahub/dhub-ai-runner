@@ -1,0 +1,6 @@
+{
+  "name": "deidentification",
+  "category": "code",
+  "type": "python",
+  "description": "이름 앞 두 글자만 남기고 가린다"
+}

@@ -1,0 +1,350 @@
+{
+  "name": "city_monitor",
+  "alias": "도시 환경 수집·분석",
+  "category": "pipeline",
+  "type": "batch",
+  "description": "날씨·대기질·지진 REST API 수집 → 일간 요약(stages, join) → LLM 분석(Gemma 4) → insights 저장. 매시 정각 실행.",
+  "steps": [
+    {
+      "name": "fetch_weather",
+      "script": "fetch_weather",
+      "options": {
+        "forecast_days": 2
+      },
+      "inputs": {
+        "cities": {
+          "dataset": "cities",
+          "options": {
+            "read_mode": "snapshot"
+          }
+        }
+      },
+      "outputs": {
+        "weather": {
+          "dataset": "weather_hourly",
+          "options": {
+            "write_mode": "overwrite"
+          }
+        }
+      }
+    },
+    {
+      "name": "fetch_air_quality",
+      "script": "fetch_air_quality",
+      "options": {
+        "forecast_days": 2
+      },
+      "inputs": {
+        "cities": {
+          "dataset": "cities",
+          "options": {
+            "read_mode": "snapshot"
+          }
+        }
+      },
+      "outputs": {
+        "air": {
+          "dataset": "air_quality_hourly",
+          "options": {
+            "write_mode": "overwrite"
+          }
+        }
+      }
+    },
+    {
+      "name": "fetch_earthquakes",
+      "script": "fetch_earthquakes",
+      "options": {
+        "hours": 24,
+        "min_magnitude": 4.0
+      },
+      "outputs": {
+        "earthquakes": {
+          "dataset": "earthquakes",
+          "options": {
+            "write_mode": "overwrite"
+          }
+        }
+      }
+    },
+    {
+      "name": "weather_daily",
+      "alias": "일간 날씨 요약 (stages)",
+      "transform": {
+        "version": 1,
+        "op": "stages",
+        "config": {
+          "input": "weather",
+          "pipeline": [
+            {
+              "op": "with_columns",
+              "exprs": [
+                {
+                  "name": "date",
+                  "expr": "CAST(time AS DATE)"
+                }
+              ]
+            },
+            {
+              "op": "group_by",
+              "by": [
+                "city",
+                "date"
+              ],
+              "agg": [
+                {
+                  "name": "temp_min",
+                  "expr": "MIN(temperature)"
+                },
+                {
+                  "name": "temp_max",
+                  "expr": "MAX(temperature)"
+                },
+                {
+                  "name": "temp_avg",
+                  "expr": "ROUND(AVG(temperature), 1)"
+                },
+                {
+                  "name": "precipitation_mm",
+                  "expr": "ROUND(SUM(precipitation), 1)"
+                },
+                {
+                  "name": "wind_max_kmh",
+                  "expr": "MAX(wind_speed)"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "inputs": {
+        "weather": {
+          "dataset": "weather_hourly",
+          "options": {
+            "read_mode": "snapshot"
+          }
+        }
+      },
+      "outputs": {
+        "daily": {
+          "dataset": "weather_daily",
+          "options": {
+            "write_mode": "overwrite"
+          }
+        }
+      }
+    },
+    {
+      "name": "air_quality_daily",
+      "alias": "일간 미세먼지 요약 (stages)",
+      "transform": {
+        "version": 1,
+        "op": "stages",
+        "config": {
+          "input": "air",
+          "pipeline": [
+            {
+              "op": "with_columns",
+              "exprs": [
+                {
+                  "name": "date",
+                  "expr": "CAST(time AS DATE)"
+                }
+              ]
+            },
+            {
+              "op": "group_by",
+              "by": [
+                "city",
+                "date"
+              ],
+              "agg": [
+                {
+                  "name": "pm10_avg",
+                  "expr": "ROUND(AVG(pm10), 1)"
+                },
+                {
+                  "name": "pm10_max",
+                  "expr": "MAX(pm10)"
+                },
+                {
+                  "name": "pm2_5_avg",
+                  "expr": "ROUND(AVG(pm2_5), 1)"
+                },
+                {
+                  "name": "pm2_5_max",
+                  "expr": "MAX(pm2_5)"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "inputs": {
+        "air": {
+          "dataset": "air_quality_hourly",
+          "options": {
+            "read_mode": "snapshot"
+          }
+        }
+      },
+      "outputs": {
+        "daily": {
+          "dataset": "air_quality_daily",
+          "options": {
+            "write_mode": "overwrite"
+          }
+        }
+      }
+    },
+    {
+      "name": "city_daily",
+      "alias": "날씨 + 대기질 + 도시 이름 (join)",
+      "transform": {
+        "version": 1,
+        "op": "join",
+        "config": {
+          "left_input": "weather",
+          "right_input": "air",
+          "join_type": "left",
+          "keys": [
+            {
+              "left": "city",
+              "right": "city"
+            },
+            {
+              "left": "date",
+              "right": "date"
+            }
+          ],
+          "columns": [
+            {
+              "input": "weather",
+              "name": "city"
+            },
+            {
+              "input": "weather",
+              "name": "date"
+            },
+            {
+              "input": "weather",
+              "name": "temp_min"
+            },
+            {
+              "input": "weather",
+              "name": "temp_max"
+            },
+            {
+              "input": "weather",
+              "name": "temp_avg"
+            },
+            {
+              "input": "weather",
+              "name": "precipitation_mm"
+            },
+            {
+              "input": "weather",
+              "name": "wind_max_kmh"
+            },
+            {
+              "input": "air",
+              "name": "pm10_avg"
+            },
+            {
+              "input": "air",
+              "name": "pm10_max"
+            },
+            {
+              "input": "air",
+              "name": "pm2_5_avg"
+            },
+            {
+              "input": "air",
+              "name": "pm2_5_max"
+            }
+          ]
+        }
+      },
+      "inputs": {
+        "weather": {
+          "dataset": "weather_daily",
+          "options": {
+            "read_mode": "snapshot"
+          }
+        },
+        "air": {
+          "dataset": "air_quality_daily",
+          "options": {
+            "read_mode": "snapshot"
+          }
+        }
+      },
+      "outputs": {
+        "out": {
+          "dataset": "city_daily",
+          "options": {
+            "write_mode": "overwrite"
+          }
+        }
+      }
+    },
+    {
+      "name": "build_brief",
+      "script": "build_brief",
+      "inputs": {
+        "city_daily": {
+          "dataset": "city_daily",
+          "options": {
+            "read_mode": "snapshot"
+          }
+        },
+        "earthquakes": {
+          "dataset": "earthquakes",
+          "options": {
+            "read_mode": "snapshot"
+          }
+        }
+      },
+      "outputs": {
+        "brief": {
+          "variable": "brief"
+        }
+      }
+    },
+    {
+      "name": "analyze",
+      "alias": "LLM 분석",
+      "script": "analyze_city",
+      "inputs": {
+        "brief": {
+          "variable": "brief"
+        }
+      },
+      "outputs": {
+        "analysis": {
+          "variable": "analysis"
+        }
+      }
+    },
+    {
+      "name": "save_insights",
+      "script": "save_insights",
+      "inputs": {
+        "analysis": {
+          "variable": "analysis"
+        }
+      },
+      "outputs": {
+        "insights": {
+          "dataset": "insights",
+          "options": {
+            "write_mode": "append"
+          }
+        }
+      }
+    }
+  ],
+  "options": {
+    "schedule": "0 * * * *"
+  }
+}

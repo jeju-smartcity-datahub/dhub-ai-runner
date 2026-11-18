@@ -1,0 +1,15 @@
+{
+  "name": "usgs_earthquake",
+  "alias": "USGS 지진 API",
+  "category": "connector",
+  "type": "rest",
+  "description": "USGS 지진 API (API 키 불필요)",
+  "options": {
+    "base_url": "https://earthquake.usgs.gov/fdsnws/event/1",
+    "timeout": 30
+  },
+  "packages": [
+    "httpx"
+  ],
+  "script_file": "connectors/rest_json.py"
+}

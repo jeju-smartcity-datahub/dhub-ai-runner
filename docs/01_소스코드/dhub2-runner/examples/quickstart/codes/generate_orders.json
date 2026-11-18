@@ -1,0 +1,6 @@
+{
+  "name": "generate_orders",
+  "category": "code",
+  "type": "python",
+  "description": "Generates a batch of sample orders"
+}

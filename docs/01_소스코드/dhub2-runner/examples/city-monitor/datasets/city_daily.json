@@ -1,0 +1,12 @@
+{
+  "name": "city_daily",
+  "category": "dataset",
+  "type": "delta",
+  "alias": "도시 일간 요약",
+  "description": "도시별 일간 날씨 + 대기질",
+  "tags": [
+    "날씨",
+    "대기질",
+    "일간"
+  ]
+}

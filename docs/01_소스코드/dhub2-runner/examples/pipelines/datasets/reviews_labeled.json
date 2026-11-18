@@ -1,0 +1,4 @@
+{
+  "name": "reviews_labeled",
+  "description": "LLM 이 감성 라벨을 붙인 리뷰 (llm transform)"
+}

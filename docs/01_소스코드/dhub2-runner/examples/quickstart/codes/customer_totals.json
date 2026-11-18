@@ -1,0 +1,6 @@
+{
+  "name": "customer_totals",
+  "category": "code",
+  "type": "sql",
+  "description": "Paid totals per customer"
+}

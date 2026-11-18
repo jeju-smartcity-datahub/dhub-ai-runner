@@ -1,0 +1,19 @@
+{
+  "name": "city_assistant",
+  "alias": "도시 환경 도우미",
+  "category": "agent",
+  "description": "대화에서 도시의 실시간 날씨·미세먼지와 최근 지진을 조회해 답하는 에이전트",
+  "input_mode": "chat",
+  "mode": "react",
+  "agent": {
+    "instructions": "당신은 한국 주요 도시(서울, 부산, 대전, 광주, 제주)의 환경 상황을 알려주는 도우미입니다.\n- 현재 상황은 반드시 current_weather, recent_earthquakes 툴로 확인한 값으로 답합니다.\n- PM10 80, PM2.5 35 를 넘으면 '나쁨'으로 알려줍니다.\n- 답은 한국어로, 수치와 함께 짧게 씁니다.",
+    "model_provider": "openai",
+    "model": "gemma4",
+    "tools": [
+      "current_weather",
+      "recent_earthquakes"
+    ],
+    "max_iterations": 8
+  },
+  "conversations": []
+}

@@ -1,0 +1,29 @@
+{
+  "name": "batch",
+  "category": "pipeline",
+  "type": "batch",
+  "description": "이름 비식별화(CDC 입력) 후 price 컬럼 제거",
+  "steps": [
+    {
+      "name": "deidentification",
+      "script": "deidentification",
+      "inputs": {
+        "input": {"dataset": "people", "options": {"read_mode": "cdc"}}
+      },
+      "outputs": {
+        "output": {"variable": "people_deidentified"}
+      }
+    },
+    {
+      "name": "drop",
+      "script": "drop",
+      "inputs": {
+        "input": {"variable": "people_deidentified"}
+      },
+      "outputs": {
+        "output": {"dataset": "people_masked", "options": {"write_mode": "append"}}
+      }
+    }
+  ],
+  "options": {}
+}

@@ -1,0 +1,12 @@
+{
+  "name": "earthquakes",
+  "category": "dataset",
+  "type": "delta",
+  "alias": "지진",
+  "description": "최근 24시간 규모 4.0 이상 지진 (USGS)",
+  "tags": [
+    "지진",
+    "원천",
+    "USGS"
+  ]
+}

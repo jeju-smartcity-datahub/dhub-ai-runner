@@ -1,0 +1,6 @@
+{
+  "name": "drop",
+  "category": "code",
+  "type": "python",
+  "description": "price 컬럼을 지운다"
+}

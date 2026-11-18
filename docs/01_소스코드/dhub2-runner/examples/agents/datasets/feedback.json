@@ -1,0 +1,9 @@
+{
+  "name": "feedback",
+  "alias": "고객 피드백",
+  "description": "Customer feedback, seeded from data/feedback.csv",
+  "tags": [
+    "피드백",
+    "원천"
+  ]
+}

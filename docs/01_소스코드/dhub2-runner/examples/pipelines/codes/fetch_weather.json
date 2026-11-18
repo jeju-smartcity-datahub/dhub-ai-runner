@@ -1,0 +1,6 @@
+{
+  "name": "fetch_weather",
+  "category": "code",
+  "type": "python",
+  "description": "Open-Meteo 커넥터로 여러 지점의 현재 날씨를 가져온다"
+}

@@ -1,0 +1,108 @@
+{
+  "name": "orders",
+  "category": "pipeline",
+  "type": "batch",
+  "description": "Generate orders, roll them up per day, and keep paid totals per customer",
+  "steps": [
+    {
+      "name": "generate",
+      "script": "generate_orders",
+      "inputs": {},
+      "outputs": {
+        "orders": {
+          "dataset": "orders_raw",
+          "options": {
+            "write_mode": "append"
+          }
+        }
+      },
+      "options": {
+        "count": 20
+      }
+    },
+    {
+      "name": "daily",
+      "transform": {
+        "version": 1,
+        "op": "stages",
+        "config": {
+          "input": "orders",
+          "pipeline": [
+            {
+              "op": "with_columns",
+              "exprs": [
+                {
+                  "name": "day",
+                  "expr": "CAST(ordered_at AS DATE)"
+                }
+              ]
+            },
+            {
+              "op": "group_by",
+              "by": [
+                "day",
+                "status"
+              ],
+              "agg": [
+                {
+                  "name": "orders",
+                  "expr": "COUNT(order_id)"
+                },
+                {
+                  "name": "amount",
+                  "expr": "SUM(amount)"
+                }
+              ]
+            },
+            {
+              "op": "sort",
+              "by": [
+                "day",
+                "status"
+              ]
+            }
+          ]
+        }
+      },
+      "inputs": {
+        "orders": {
+          "dataset": "orders_raw",
+          "options": {
+            "read_mode": "snapshot"
+          }
+        }
+      },
+      "outputs": {
+        "daily": {
+          "dataset": "orders_daily",
+          "options": {
+            "write_mode": "overwrite"
+          }
+        }
+      }
+    },
+    {
+      "name": "customers",
+      "script": "customer_totals",
+      "inputs": {
+        "orders": {
+          "dataset": "orders_raw",
+          "options": {
+            "read_mode": "snapshot"
+          }
+        }
+      },
+      "outputs": {
+        "customers": {
+          "dataset": "customer_totals",
+          "options": {
+            "write_mode": "overwrite"
+          }
+        }
+      }
+    }
+  ],
+  "options": {
+    "schedule": "*/10 * * * *"
+  }
+}

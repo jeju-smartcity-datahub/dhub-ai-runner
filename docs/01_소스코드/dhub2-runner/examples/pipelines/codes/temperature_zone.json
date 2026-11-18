@@ -1,0 +1,6 @@
+{
+  "name": "temperature_zone",
+  "category": "code",
+  "type": "python",
+  "description": "기온으로 지역 구간을 붙인다"
+}

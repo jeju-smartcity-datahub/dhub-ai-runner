@@ -1,0 +1,11 @@
+{
+  "name": "air_quality_daily",
+  "category": "dataset",
+  "type": "delta",
+  "alias": "대기질 일간",
+  "description": "도시별 일간 미세먼지 요약",
+  "tags": [
+    "대기질",
+    "일간"
+  ]
+}

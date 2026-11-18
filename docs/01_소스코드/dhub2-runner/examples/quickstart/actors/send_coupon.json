@@ -1,0 +1,16 @@
+{
+  "name": "send_coupon",
+  "description": "Send a discount coupon to a customer. Needs the user's approval.",
+  "confirmation_policy": "confirm",
+  "function": {
+    "inputs": {
+      "type": "object",
+      "properties": {
+        "customer_id": {"type": "string"},
+        "percent": {"type": "integer", "description": "Discount percent, 5-30"}
+      },
+      "required": ["customer_id", "percent"]
+    }
+  },
+  "source_file": "actors/send_coupon.py"
+}

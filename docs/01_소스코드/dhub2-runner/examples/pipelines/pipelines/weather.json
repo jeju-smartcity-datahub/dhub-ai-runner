@@ -1,0 +1,26 @@
+{
+  "name": "weather",
+  "category": "pipeline",
+  "type": "batch",
+  "description": "스크립트 커넥터(Open-Meteo)로 현재 날씨를 모으고 temperature_zone 코드로 구간을 붙인다. 30분마다 실행.",
+  "steps": [
+    {
+      "name": "fetch",
+      "script": "fetch_weather",
+      "outputs": {
+        "output": {"dataset": "weather", "options": {"write_mode": "append"}}
+      }
+    },
+    {
+      "name": "zone",
+      "script": "temperature_zone",
+      "inputs": {
+        "input": {"dataset": "weather", "options": {"read_mode": "cdc"}}
+      },
+      "outputs": {
+        "output": {"dataset": "weather_zone", "options": {"write_mode": "append"}}
+      }
+    }
+  ],
+  "options": {"schedule": "*/30 * * * *"}
+}

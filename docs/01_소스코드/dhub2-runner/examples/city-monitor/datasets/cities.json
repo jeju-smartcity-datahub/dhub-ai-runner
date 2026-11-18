@@ -1,0 +1,46 @@
+{
+  "name": "cities",
+  "category": "dataset",
+  "type": "delta",
+  "alias": "도시",
+  "description": "모니터링 대상 도시 (data/cities.csv)",
+  "tags": [
+    "기준정보"
+  ],
+  "schema": {
+    "fields": [
+      {
+        "name": "city",
+        "type": {
+          "name": "utf8"
+        },
+        "nullable": true,
+        "description": "도시 코드"
+      },
+      {
+        "name": "name",
+        "type": {
+          "name": "utf8"
+        },
+        "nullable": true,
+        "description": "도시 이름"
+      },
+      {
+        "name": "latitude",
+        "type": {
+          "name": "float64"
+        },
+        "nullable": true,
+        "description": "위도"
+      },
+      {
+        "name": "longitude",
+        "type": {
+          "name": "float64"
+        },
+        "nullable": true,
+        "description": "경도"
+      }
+    ]
+  }
+}

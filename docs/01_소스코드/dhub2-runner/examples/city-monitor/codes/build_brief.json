@@ -1,0 +1,6 @@
+{
+  "name": "build_brief",
+  "category": "code",
+  "type": "python",
+  "description": "도시별 일간 요약과 지진 목록을 LLM 에 넘길 요약으로 만든다"
+}

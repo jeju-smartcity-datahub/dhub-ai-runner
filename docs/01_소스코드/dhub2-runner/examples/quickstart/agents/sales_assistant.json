@@ -1,0 +1,19 @@
+{
+  "name": "sales_assistant",
+  "description": "Suggests and sends coupons for customers",
+  "input_mode": "chat",
+  "mode": "react",
+  "agent": {
+    "instructions": "You help the sales team with coupons. Use suggest_coupon to pick a discount from a customer's paid total, and only send coupons the user asks for.",
+    "model_provider": "openai",
+    "model": "gemma4",
+    "tools": [
+      "suggest_coupon"
+    ],
+    "actors": [
+      "send_coupon"
+    ],
+    "max_iterations": 10
+  },
+  "conversations": []
+}

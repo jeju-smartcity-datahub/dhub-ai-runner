@@ -1,0 +1,6 @@
+{
+  "name": "save_summary",
+  "category": "code",
+  "type": "python",
+  "description": "Stores the agent's structured answer as a row"
+}

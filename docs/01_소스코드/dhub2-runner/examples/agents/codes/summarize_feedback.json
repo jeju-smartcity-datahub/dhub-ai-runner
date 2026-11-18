@@ -1,0 +1,6 @@
+{
+  "name": "summarize_feedback",
+  "category": "code",
+  "type": "python",
+  "description": "Gemma 4 로 고객 피드백을 요약한다 (@use_llm)"
+}

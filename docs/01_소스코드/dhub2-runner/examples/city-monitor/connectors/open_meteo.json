@@ -1,0 +1,15 @@
+{
+  "name": "open_meteo",
+  "alias": "Open-Meteo 날씨 API",
+  "category": "connector",
+  "type": "rest",
+  "description": "Open-Meteo 날씨 API (API 키 불필요)",
+  "options": {
+    "base_url": "https://api.open-meteo.com/v1",
+    "timeout": 30
+  },
+  "packages": [
+    "httpx"
+  ],
+  "script_file": "connectors/rest_json.py"
+}

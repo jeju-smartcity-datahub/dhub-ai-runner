@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="ko" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>dhub2-runner</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Roboto:wght@700&family=Fira+Code:wght@400;500&display=swap">
+  <link rel="stylesheet" href="/static/style.css">
+  <script>
+    // Dark is the default, as in the dhub2 portal; the choice is remembered per browser.
+    // ?theme=light|dark picks one for this page load (links, screenshots).
+    try {
+      const asked = new URLSearchParams(location.search).get("theme");
+      document.documentElement.dataset.theme = asked || localStorage.getItem("runner-theme") || "dark";
+    } catch {}
+  </script>
+</head>
+<body>
+  <header class="navbar">
+    <a class="brand" href="#/">
+      <span class="brand-mark" aria-hidden="true"></span>
+      <span>dhub2<span class="brand-sub">runner</span></span>
+    </a>
+    <nav id="crumbs" class="crumbs" aria-label="위치"></nav>
+    <span class="spacer"></span>
+    <button id="theme-toggle" class="icon-button" type="button" aria-label="테마 바꾸기" title="테마 바꾸기"></button>
+  </header>
+  <div class="layout">
+    <aside class="sidebar">
+      <nav class="nav">
+        <a class="nav-item" href="#/" data-nav="home"><span data-icon="home"></span>홈</a>
+        <a class="nav-item" href="#/import" data-nav="import"><span data-icon="upload"></span>가져오기</a>
+        <a class="nav-item" href="#/ops" data-nav="ops"><span data-icon="activity"></span>운영</a>
+        <a class="nav-item" href="#/catalog" data-nav="catalog"><span data-icon="catalog"></span>카탈로그</a>
+        <div class="nav-section">컬렉션</div>
+        <div id="collection-list"></div>
+        <div class="nav-section">설정</div>
+        <a class="nav-item" href="#/secrets" id="secrets-link" data-nav="secrets"><span data-icon="key"></span>시크릿</a>
+        <a class="nav-item" href="/api/docs" target="_blank" rel="noopener"><span data-icon="code"></span>API 문서</a>
+      </nav>
+    </aside>
+    <main id="view" class="view"></main>
+  </div>
+  <div id="toast" class="toast" role="status" hidden></div>
+  <script src="/static/app.js"></script>
+</body>
+</html>

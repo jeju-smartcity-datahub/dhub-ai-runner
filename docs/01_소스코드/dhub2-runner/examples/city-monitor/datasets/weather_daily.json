@@ -1,0 +1,11 @@
+{
+  "name": "weather_daily",
+  "category": "dataset",
+  "type": "delta",
+  "alias": "날씨 일간",
+  "description": "도시별 일간 기온·강수·풍속 요약",
+  "tags": [
+    "날씨",
+    "일간"
+  ]
+}

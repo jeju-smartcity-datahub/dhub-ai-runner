@@ -1,0 +1,6 @@
+{
+  "name": "tag_count",
+  "category": "code",
+  "type": "python",
+  "description": "변수로 받은 행 수를 컬럼으로 붙인다"
+}

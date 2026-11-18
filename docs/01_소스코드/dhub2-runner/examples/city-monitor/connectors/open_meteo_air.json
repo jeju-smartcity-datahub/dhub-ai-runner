@@ -1,0 +1,15 @@
+{
+  "name": "open_meteo_air",
+  "alias": "Open-Meteo 대기질 API",
+  "category": "connector",
+  "type": "rest",
+  "description": "Open-Meteo 대기질 API (API 키 불필요)",
+  "options": {
+    "base_url": "https://air-quality-api.open-meteo.com/v1",
+    "timeout": 30
+  },
+  "packages": [
+    "httpx"
+  ],
+  "script_file": "connectors/rest_json.py"
+}

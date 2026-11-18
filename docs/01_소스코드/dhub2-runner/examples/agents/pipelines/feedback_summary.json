@@ -1,0 +1,39 @@
+{
+  "name": "feedback_summary",
+  "category": "pipeline",
+  "type": "batch",
+  "description": "피드백을 모아 LLM(@use_llm) 으로 요약하고 결과를 데이터셋에 쌓는다",
+  "steps": [
+    {
+      "name": "collect",
+      "script": "collect_feedback",
+      "inputs": {
+        "feedback": {"dataset": "feedback", "options": {"read_mode": "snapshot"}}
+      },
+      "outputs": {
+        "items": {"variable": "feedback_items"}
+      }
+    },
+    {
+      "name": "summarize",
+      "script": "summarize_feedback",
+      "inputs": {
+        "feedback": {"variable": "feedback_items"}
+      },
+      "outputs": {
+        "summary": {"variable": "summary"}
+      }
+    },
+    {
+      "name": "save",
+      "script": "save_summary",
+      "inputs": {
+        "summary": {"variable": "summary"}
+      },
+      "outputs": {
+        "output": {"dataset": "feedback_summary", "options": {"write_mode": "append"}}
+      }
+    }
+  ],
+  "options": {}
+}

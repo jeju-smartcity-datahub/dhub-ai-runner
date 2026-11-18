@@ -1,0 +1,29 @@
+{
+  "name": "variable",
+  "category": "pipeline",
+  "type": "batch",
+  "description": "스텝 사이에 변수(row_count)로 값 전달",
+  "steps": [
+    {
+      "name": "row_count",
+      "inputs": {
+        "input": {"dataset": "people", "options": {"read_mode": "snapshot"}}
+      },
+      "outputs": {
+        "count": {"variable": "row_count"}
+      },
+      "script": "row_count"
+    },
+    {
+      "name": "tag_count",
+      "inputs": {
+        "input": {"dataset": "people", "options": {"read_mode": "snapshot"}},
+        "n": {"variable": "row_count"}
+      },
+      "outputs": {
+        "output": {"dataset": "people_summary", "options": {"write_mode": "overwrite"}}
+      },
+      "script": "tag_count"
+    }
+  ]
+}

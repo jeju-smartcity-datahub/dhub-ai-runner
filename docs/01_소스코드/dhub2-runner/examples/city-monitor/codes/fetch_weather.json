@@ -1,0 +1,6 @@
+{
+  "name": "fetch_weather",
+  "category": "code",
+  "type": "python",
+  "description": "Open-Meteo 에서 도시별 시간별 날씨를 가져온다"
+}

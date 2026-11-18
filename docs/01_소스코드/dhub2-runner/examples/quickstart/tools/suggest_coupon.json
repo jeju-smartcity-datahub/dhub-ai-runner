@@ -1,0 +1,15 @@
+{
+  "name": "suggest_coupon",
+  "type": "python",
+  "description": "Suggest a coupon discount percent from a customer's paid total amount (KRW).",
+  "function": {
+    "inputs": {
+      "type": "object",
+      "properties": {
+        "total_amount": {"type": "integer", "description": "The customer's paid total in KRW"}
+      },
+      "required": ["total_amount"]
+    }
+  },
+  "source_file": "tools/suggest_coupon.py"
+}

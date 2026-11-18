@@ -1,0 +1,48 @@
+{
+  "name": "customer_totals",
+  "category": "dataset",
+  "type": "delta",
+  "alias": "고객별 결제 합계",
+  "description": "Paid order count and amount per customer",
+  "tags": [
+    "주문",
+    "집계",
+    "고객"
+  ],
+  "schema": {
+    "fields": [
+      {
+        "name": "customer_id",
+        "type": {
+          "name": "utf8"
+        },
+        "nullable": true,
+        "description": "고객 id"
+      },
+      {
+        "name": "name",
+        "type": {
+          "name": "utf8"
+        },
+        "nullable": true,
+        "description": "고객 이름"
+      },
+      {
+        "name": "order_count",
+        "type": {
+          "name": "int64"
+        },
+        "nullable": true,
+        "description": "결제한 주문 수"
+      },
+      {
+        "name": "total_amount",
+        "type": {
+          "name": "int64"
+        },
+        "nullable": true,
+        "description": "결제 금액 합계 (원)"
+      }
+    ]
+  }
+}

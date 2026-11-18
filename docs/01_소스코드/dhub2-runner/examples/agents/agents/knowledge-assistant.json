@@ -1,0 +1,57 @@
+{
+  "name": "knowledge-assistant",
+  "description": "@use_llm 으로 LLM 을 쓰는 Tool 이 포함된 ReAct 에이전트",
+  "input_mode": "chat",
+  "mode": "react",
+  "agent": {
+    "instructions": "당신은 텍스트 요약 도우미입니다. 사용자가 요약을 요청하면 summarize_text 도구로 요약해 답변하세요.",
+    "model_provider": "openai",
+    "model": "gemma4",
+    "tools": [
+      {
+        "name": "summarize_text",
+        "description": "주어진 텍스트를 LLM으로 요약합니다. 소스의 @use_llm 바인딩은 function.decorators 설정이 override합니다(config-overrides-code, ADR-0065) — 소스 편집 없이 배포 설정으로 model/temperature를 교체합니다.",
+        "type": "python",
+        "function": {
+          "source": "@use_llm('llm', model='gemma4', temperature=0.3)\ndef execute(text, language='Korean'):\n    response = llm.invoke([\n        ('system', f'You are a summarizer. Summarize in {language}.'),\n        ('human', text),\n    ])\n    return {'summary': response.content}\n",
+          "decorators": [
+            {
+              "decorator": "use_llm",
+              "name": "llm",
+              "arguments": {
+                "model": "gemma4",
+                "temperature": 0.1
+              }
+            }
+          ],
+          "inputs": {
+            "type": "object",
+            "properties": {
+              "text": {
+                "type": "string",
+                "description": "요약할 텍스트"
+              },
+              "language": {
+                "type": "string",
+                "description": "요약 결과 언어 (기본: Korean)"
+              }
+            },
+            "required": [
+              "text"
+            ]
+          }
+        },
+        "examples": [
+          {
+            "description": "영문 텍스트를 한국어로 요약",
+            "arguments": {
+              "text": "LangGraph is a framework for building stateful agents.",
+              "language": "Korean"
+            }
+          }
+        ]
+      }
+    ],
+    "max_iterations": 10
+  }
+}

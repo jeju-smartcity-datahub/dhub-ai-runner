@@ -1,0 +1,71 @@
+{
+  "name": "payment-assistant",
+  "description": "결제 처리 도우미 — confirm actor interrupt 기반 HITL 예제 (ADR-0013)",
+  "input_mode": "chat",
+  "mode": "react",
+  "agent": {
+    "instructions": "당신은 결제 처리 도우미입니다. 잔액 조회는 즉시 처리하고, 이체/결제는 confirm policy 에 의해 서버가 자동으로 승인을 받습니다. 사용자 발화에서 금액·계좌·메모를 최대한 추출해 actor 를 호출하세요. 부족한 인자는 비워두면 승인 UI 에서 사용자가 채웁니다.",
+    "model_provider": "openai",
+    "model": "gemma4",
+    "tools": [
+      {
+        "name": "get_balance",
+        "description": "계좌 잔액을 조회합니다.",
+        "type": "python",
+        "function": {
+          "source": "def execute(account_id: str) -> dict:\n    return {\"account_id\": account_id, \"balance\": 1200000, \"currency\": \"KRW\"}\n",
+          "inputs": {
+            "type": "object",
+            "properties": {
+              "account_id": {
+                "type": "string",
+                "description": "계좌 ID"
+              }
+            },
+            "required": [
+              "account_id"
+            ]
+          }
+        }
+      }
+    ],
+    "actors": [
+      {
+        "name": "process_payment",
+        "description": "계좌 이체 또는 결제를 처리합니다.",
+        "type": "python",
+        "function": {
+          "source": "def execute(to_account: str, amount: int, memo: str = '') -> dict:\n    return {\"transaction_id\": \"TXN-9876\", \"to_account\": to_account, \"amount\": amount, \"memo\": memo, \"status\": \"completed\"}\n",
+          "inputs": {
+            "type": "object",
+            "properties": {
+              "to_account": {
+                "type": "string",
+                "description": "수신 계좌 ID",
+                "enum": [
+                  "B-001",
+                  "B-002",
+                  "B-003"
+                ]
+              },
+              "amount": {
+                "type": "integer",
+                "description": "이체 금액 (원)"
+              },
+              "memo": {
+                "type": "string",
+                "description": "이체 메모 (선택)"
+              }
+            },
+            "required": [
+              "to_account",
+              "amount"
+            ]
+          }
+        },
+        "confirmation_policy": "confirm"
+      }
+    ],
+    "max_iterations": 10
+  }
+}

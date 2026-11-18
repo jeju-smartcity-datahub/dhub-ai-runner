@@ -1,0 +1,49 @@
+{
+  "name": "llm_review",
+  "category": "pipeline",
+  "type": "batch",
+  "description": "llm transform — 리뷰마다 LLM 을 한 번 불러 감성 라벨을 붙인다 (Gemma 4 엔드포인트 필요)",
+  "steps": [
+    {
+      "name": "label",
+      "transform": {
+        "version": 1,
+        "op": "llm",
+        "config": {
+          "input": "reviews",
+          "model_id": "gemma4",
+          "system": "You label product reviews. Answer with one word only.",
+          "prompt": "상품: {{product}}\n리뷰: {{text}}\n\n이 리뷰의 감성은 positive, neutral, negative 중 무엇입니까?",
+          "output": {
+            "column": "sentiment",
+            "type": "string",
+            "choices": [
+              "positive",
+              "neutral",
+              "negative"
+            ]
+          },
+          "max_rows": 100,
+          "max_tokens": 16
+        }
+      },
+      "inputs": {
+        "reviews": {
+          "dataset": "reviews",
+          "options": {
+            "read_mode": "cdc"
+          }
+        }
+      },
+      "outputs": {
+        "output": {
+          "dataset": "reviews_labeled",
+          "options": {
+            "write_mode": "append"
+          }
+        }
+      }
+    }
+  ],
+  "options": {}
+}

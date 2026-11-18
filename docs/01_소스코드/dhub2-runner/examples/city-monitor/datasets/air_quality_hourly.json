@@ -1,0 +1,12 @@
+{
+  "name": "air_quality_hourly",
+  "category": "dataset",
+  "type": "delta",
+  "alias": "대기질 시간별",
+  "description": "도시별 시간별 PM10·PM2.5 (Open-Meteo Air Quality)",
+  "tags": [
+    "대기질",
+    "원천",
+    "Open-Meteo"
+  ]
+}

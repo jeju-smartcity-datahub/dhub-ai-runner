@@ -1,0 +1,6 @@
+{
+  "name": "city_monitor",
+  "alias": "도시 환경 모니터링",
+  "category": "collection",
+  "description": "여러 공개 REST API(날씨, 대기질, 지진)에서 데이터를 모아 변환해 데이터셋에 쌓고, LLM 이 분석하며, 에이전트가 실시간으로 조회하는 컬렉션"
+}

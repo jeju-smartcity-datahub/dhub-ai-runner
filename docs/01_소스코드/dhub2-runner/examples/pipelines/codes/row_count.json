@@ -1,0 +1,6 @@
+{
+  "name": "row_count",
+  "category": "code",
+  "type": "python",
+  "description": "행 수를 변수로 내보낸다"
+}

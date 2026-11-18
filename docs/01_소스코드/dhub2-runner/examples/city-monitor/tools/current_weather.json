@@ -1,0 +1,27 @@
+{
+  "name": "current_weather",
+  "category": "agent.tool",
+  "type": "python",
+  "description": "도시의 현재 기온, 풍속, 미세먼지를 실시간으로 조회합니다. city 는 seoul, busan, daejeon, gwangju, jeju 중 하나.",
+  "function": {
+    "inputs": {
+      "type": "object",
+      "properties": {
+        "city": {
+          "type": "string",
+          "enum": [
+            "seoul",
+            "busan",
+            "daejeon",
+            "gwangju",
+            "jeju"
+          ]
+        }
+      },
+      "required": [
+        "city"
+      ]
+    }
+  },
+  "source_file": "tools/current_weather.py"
+}

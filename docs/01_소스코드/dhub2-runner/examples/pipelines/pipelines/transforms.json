@@ -1,0 +1,263 @@
+{
+  "name": "transforms",
+  "category": "pipeline",
+  "type": "batch",
+  "description": "코드 없이 native transform 만으로 만든 파이프라인 — stages, join, union, 그리고 입력의 row_filters / column_masks",
+  "steps": [
+    {
+      "name": "region_totals",
+      "alias": "지역별 매출 집계 (stages)",
+      "transform": {
+        "version": 1,
+        "op": "stages",
+        "config": {
+          "input": "sales",
+          "pipeline": [
+            {
+              "op": "with_columns",
+              "exprs": [
+                {
+                  "name": "amount",
+                  "expr": "quantity * unit_price"
+                }
+              ]
+            },
+            {
+              "op": "group_by",
+              "by": [
+                "region_code"
+              ],
+              "agg": [
+                {
+                  "name": "orders",
+                  "expr": "COUNT(order_id)"
+                },
+                {
+                  "name": "quantity",
+                  "expr": "SUM(quantity)"
+                },
+                {
+                  "name": "amount",
+                  "expr": "SUM(amount)"
+                }
+              ]
+            },
+            {
+              "op": "sort",
+              "by": [
+                "amount"
+              ],
+              "descending": true
+            }
+          ]
+        }
+      },
+      "inputs": {
+        "sales": {
+          "dataset": "sales",
+          "options": {
+            "read_mode": "snapshot"
+          }
+        }
+      },
+      "outputs": {
+        "totals": {
+          "dataset": "region_totals",
+          "options": {
+            "write_mode": "overwrite"
+          }
+        }
+      }
+    },
+    {
+      "name": "attach_region_name",
+      "alias": "지역 이름 붙이기 (join)",
+      "transform": {
+        "version": 1,
+        "op": "join",
+        "config": {
+          "left_input": "totals",
+          "right_input": "regions",
+          "join_type": "left",
+          "keys": [
+            {
+              "left": "region_code",
+              "right": "region_code"
+            }
+          ],
+          "columns": [
+            {
+              "input": "totals",
+              "name": "region_code"
+            },
+            {
+              "input": "regions",
+              "name": "region_name"
+            },
+            {
+              "input": "totals",
+              "name": "orders"
+            },
+            {
+              "input": "totals",
+              "name": "quantity"
+            },
+            {
+              "input": "totals",
+              "name": "amount"
+            }
+          ]
+        }
+      },
+      "inputs": {
+        "totals": {
+          "dataset": "region_totals",
+          "options": {
+            "read_mode": "snapshot"
+          }
+        },
+        "regions": {
+          "dataset": "regions",
+          "options": {
+            "read_mode": "snapshot"
+          }
+        }
+      },
+      "outputs": {
+        "output": {
+          "dataset": "sales_by_region",
+          "options": {
+            "write_mode": "overwrite"
+          }
+        }
+      }
+    },
+    {
+      "name": "all_sales",
+      "alias": "현재 + 지난 주문 (union)",
+      "transform": {
+        "version": 1,
+        "op": "union",
+        "config": {
+          "inputs": [
+            "current",
+            "archive"
+          ]
+        }
+      },
+      "inputs": {
+        "current": {
+          "dataset": "sales",
+          "options": {
+            "read_mode": "snapshot"
+          },
+          "column_masks": {
+            "order_id": {
+              "type": "passthrough"
+            },
+            "region_code": {
+              "type": "passthrough"
+            },
+            "product": {
+              "type": "passthrough"
+            },
+            "quantity": {
+              "type": "passthrough"
+            },
+            "unit_price": {
+              "type": "passthrough"
+            },
+            "ordered_at": {
+              "type": "passthrough"
+            }
+          }
+        },
+        "archive": {
+          "dataset": "sales_archive",
+          "options": {
+            "read_mode": "snapshot"
+          }
+        }
+      },
+      "outputs": {
+        "output": {
+          "dataset": "sales_all",
+          "options": {
+            "write_mode": "overwrite"
+          }
+        }
+      }
+    },
+    {
+      "name": "masked_sales",
+      "alias": "서울·부산 주문, 개인정보 마스킹 (row_filters + column_masks)",
+      "transform": {
+        "version": 1,
+        "op": "stages",
+        "config": {
+          "input": "sales",
+          "pipeline": [
+            {
+              "op": "rename",
+              "map": {
+                "customer_email": "email",
+                "customer_phone": "phone"
+              }
+            }
+          ]
+        }
+      },
+      "inputs": {
+        "sales": {
+          "dataset": "sales",
+          "row_filters": {
+            "kind": "and",
+            "conditions": [
+              {
+                "kind": "condition",
+                "column": "region_code",
+                "operator": "in",
+                "value": [
+                  "SEL",
+                  "BSN"
+                ]
+              },
+              {
+                "kind": "condition",
+                "column": "ordered_at",
+                "operator": "gte",
+                "value": "2026-10-02"
+              }
+            ]
+          },
+          "column_masks": {
+            "order_id": {
+              "type": "passthrough"
+            },
+            "region_code": {
+              "type": "passthrough"
+            },
+            "product": {
+              "type": "passthrough"
+            },
+            "customer_email": {
+              "type": "email_local"
+            },
+            "customer_phone": {
+              "type": "phone_middle"
+            }
+          }
+        }
+      },
+      "outputs": {
+        "output": {
+          "dataset": "sales_masked",
+          "options": {
+            "write_mode": "overwrite"
+          }
+        }
+      }
+    }
+  ],
+  "options": {}
+}

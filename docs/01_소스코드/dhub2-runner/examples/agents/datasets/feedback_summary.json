@@ -1,0 +1,9 @@
+{
+  "name": "feedback_summary",
+  "alias": "피드백 요약",
+  "description": "One row per pipeline run with the agent's summary",
+  "tags": [
+    "피드백",
+    "LLM"
+  ]
+}

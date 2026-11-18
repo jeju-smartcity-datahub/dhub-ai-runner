@@ -1,0 +1,4 @@
+{
+  "name": "sales_masked",
+  "description": "개인정보를 마스킹한 주문 (row_filters + column_masks)"
+}

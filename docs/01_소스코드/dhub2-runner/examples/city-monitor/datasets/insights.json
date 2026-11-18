@@ -1,0 +1,11 @@
+{
+  "name": "insights",
+  "category": "dataset",
+  "type": "delta",
+  "alias": "LLM 분석",
+  "description": "LLM 분석 결과 (실행마다 한 행)",
+  "tags": [
+    "LLM",
+    "분석"
+  ]
+}

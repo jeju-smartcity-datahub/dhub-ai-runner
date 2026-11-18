@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="ko" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>dhub2 챗봇</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Roboto:wght@700&family=Fira+Code:wght@400;500&display=swap">
+  <link rel="stylesheet" href="/static/style.css">
+  <link rel="stylesheet" href="/static/chat.css">
+  <script>
+    // Same theme handling as the runner UI; ?theme= picks one for this load.
+    try {
+      const asked = new URLSearchParams(location.search).get("theme");
+      document.documentElement.dataset.theme = asked || localStorage.getItem("runner-theme") || "dark";
+    } catch {}
+  </script>
+</head>
+<body class="chatbot">
+  <aside class="cb-side" id="side">
+    <div class="cb-side-head">
+      <a class="brand" href="/" title="dhub2-runner">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span>dhub2<span class="brand-sub">챗봇</span></span>
+      </a>
+    </div>
+    <label class="cb-label" for="agent-select">에이전트</label>
+    <select id="agent-select" class="cb-select"></select>
+    <button id="new-chat" class="button primary cb-new" type="button"></button>
+    <div class="cb-label">대화</div>
+    <nav id="sessions" class="cb-sessions" aria-label="대화 목록"></nav>
+  </aside>
+  <div class="cb-scrim" id="scrim" hidden></div>
+  <main class="cb-main">
+    <header class="cb-head">
+      <button id="side-toggle" class="icon-button cb-side-toggle" type="button" aria-label="대화 목록" title="대화 목록"></button>
+      <div class="cb-title">
+        <div class="cb-name" id="agent-name"></div>
+        <div class="cb-sub" id="agent-sub"></div>
+      </div>
+      <span id="agent-status"></span>
+      <a id="admin-link" class="icon-button" href="/" title="runner에서 열기" aria-label="runner에서 열기"></a>
+      <button id="theme-toggle" class="icon-button" type="button" aria-label="테마 바꾸기" title="테마 바꾸기"></button>
+    </header>
+    <section id="thread" class="cb-thread" aria-live="polite"></section>
+    <form id="composer" class="cb-composer">
+      <div class="cb-box">
+        <textarea id="input" rows="1" placeholder="메시지를 입력하세요" autocomplete="off"></textarea>
+        <button id="send" class="button primary cb-send" type="submit" aria-label="보내기" title="보내기"></button>
+      </div>
+      <div class="cb-foot">Enter 보내기 · Shift+Enter 줄바꿈 · 답은 에이전트가 만든 것이니 중요한 내용은 확인하세요.</div>
+    </form>
+  </main>
+  <div id="toast" class="toast" role="status" hidden></div>
+  <script src="/static/chat.js"></script>
+</body>
+</html>

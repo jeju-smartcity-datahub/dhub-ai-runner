@@ -1,0 +1,6 @@
+{
+  "name": "fetch_air_quality",
+  "category": "code",
+  "type": "python",
+  "description": "Open-Meteo Air Quality 에서 도시별 시간별 미세먼지를 가져온다"
+}

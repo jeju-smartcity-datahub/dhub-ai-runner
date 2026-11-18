@@ -1,0 +1,64 @@
+{
+  "name": "orders_raw",
+  "category": "dataset",
+  "type": "delta",
+  "alias": "주문 원천",
+  "description": "Raw orders, appended on every run",
+  "tags": [
+    "주문",
+    "원천"
+  ],
+  "schema": {
+    "fields": [
+      {
+        "name": "order_id",
+        "type": {
+          "name": "utf8"
+        },
+        "nullable": true,
+        "description": "주문 번호 (실행 시각-순번)"
+      },
+      {
+        "name": "customer_id",
+        "type": {
+          "name": "utf8"
+        },
+        "nullable": true,
+        "description": "고객 id"
+      },
+      {
+        "name": "customer_name",
+        "type": {
+          "name": "utf8"
+        },
+        "nullable": true,
+        "description": "고객 이름"
+      },
+      {
+        "name": "amount",
+        "type": {
+          "name": "int64"
+        },
+        "nullable": true,
+        "description": "주문 금액 (원)"
+      },
+      {
+        "name": "status",
+        "type": {
+          "name": "utf8"
+        },
+        "nullable": true,
+        "description": "paid 또는 refunded"
+      },
+      {
+        "name": "ordered_at",
+        "type": {
+          "name": "timestamp",
+          "unit": "us"
+        },
+        "nullable": true,
+        "description": "주문 시각"
+      }
+    ]
+  }
+}

@@ -1,0 +1,4 @@
+{
+  "name": "sales_by_region",
+  "description": "지역별 매출 (stages + join)"
+}

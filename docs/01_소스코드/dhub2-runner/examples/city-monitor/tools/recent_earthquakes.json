@@ -1,0 +1,22 @@
+{
+  "name": "recent_earthquakes",
+  "category": "agent.tool",
+  "type": "python",
+  "description": "최근 지진을 규모 순으로 조회합니다.",
+  "function": {
+    "inputs": {
+      "type": "object",
+      "properties": {
+        "hours": {
+          "type": "integer",
+          "description": "몇 시간 전부터 (기본 24)"
+        },
+        "min_magnitude": {
+          "type": "number",
+          "description": "최소 규모 (기본 4.5)"
+        }
+      }
+    }
+  },
+  "source_file": "tools/recent_earthquakes.py"
+}

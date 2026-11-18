@@ -1,0 +1,6 @@
+{
+  "name": "save_insights",
+  "category": "code",
+  "type": "python",
+  "description": "LLM 분석 결과를 한 행으로 저장한다"
+}

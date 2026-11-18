@@ -1,0 +1,12 @@
+{
+  "name": "orders_daily",
+  "category": "dataset",
+  "type": "delta",
+  "alias": "일별 주문 집계",
+  "description": "Order totals per day and status",
+  "tags": [
+    "주문",
+    "집계",
+    "일간"
+  ]
+}

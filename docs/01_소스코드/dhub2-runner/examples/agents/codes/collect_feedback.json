@@ -1,0 +1,6 @@
+{
+  "name": "collect_feedback",
+  "category": "code",
+  "type": "python",
+  "description": "Turns the feedback table into a list the agent step can take"
+}

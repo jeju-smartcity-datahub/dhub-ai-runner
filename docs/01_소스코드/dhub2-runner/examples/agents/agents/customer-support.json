@@ -1,0 +1,125 @@
+{
+  "name": "customer-support",
+  "description": "고객 문의 자동 응답 에이전트",
+  "input_mode": "chat",
+  "mode": "react",
+  "agent": {
+    "instructions": "당신은 친절한 고객 지원 담당자입니다. 사용자의 질문에 정중하게 답변하세요.",
+    "model_provider": "openai",
+    "model": "gemma4",
+    "tools": [
+      {
+        "name": "search_faq",
+        "description": "FAQ 데이터베이스에서 관련 답변을 검색합니다.",
+        "type": "python",
+        "function": {
+          "source": "def execute(query: str) -> dict:\n    return {\"results\": [f\"FAQ result for: {query}\"]}\n",
+          "inputs": {
+            "type": "object",
+            "properties": {
+              "query": {
+                "type": "string",
+                "description": "검색 질의"
+              }
+            },
+            "required": [
+              "query"
+            ]
+          }
+        }
+      },
+      {
+        "name": "get_order_status",
+        "description": "주문 상태를 조회합니다.",
+        "type": "python",
+        "function": {
+          "source": "def execute(order_id: str) -> dict:\n    return {\"order_id\": order_id, \"status\": \"shipped\"}\n",
+          "inputs": {
+            "type": "object",
+            "properties": {
+              "order_id": {
+                "type": "string",
+                "description": "주문 ID"
+              }
+            },
+            "required": [
+              "order_id"
+            ]
+          }
+        }
+      }
+    ],
+    "actors": [
+      {
+        "name": "create_ticket",
+        "description": "고객 지원 티켓을 생성합니다.",
+        "function": {
+          "source": "def execute(customer_id: str, subject: str, body: str) -> dict:\n    return {\"ticket_id\": \"T-001\", \"status\": \"created\"}\n",
+          "inputs": {
+            "type": "object",
+            "properties": {
+              "customer_id": {
+                "type": "string",
+                "description": "고객 ID"
+              },
+              "subject": {
+                "type": "string",
+                "description": "티켓 제목"
+              },
+              "body": {
+                "type": "string",
+                "description": "티켓 내용"
+              }
+            },
+            "required": [
+              "customer_id",
+              "subject",
+              "body"
+            ]
+          }
+        },
+        "confirmation_policy": "auto"
+      },
+      {
+        "name": "issue_refund",
+        "description": "환불을 처리합니다.",
+        "function": {
+          "source": "def execute(order_id: str, amount: int) -> dict:\n    return {\"refund_id\": \"R-001\", \"status\": \"processed\"}\n",
+          "inputs": {
+            "type": "object",
+            "properties": {
+              "order_id": {
+                "type": "string",
+                "description": "주문 ID"
+              },
+              "amount": {
+                "type": "integer",
+                "description": "환불 금액"
+              }
+            },
+            "required": [
+              "order_id",
+              "amount"
+            ]
+          }
+        },
+        "confirmation_policy": "confirm"
+      }
+    ],
+    "max_iterations": 10
+  },
+  "conversations": [
+    {
+      "name": "customer_id",
+      "type": "string",
+      "description": "현재 대화 중인 고객의 ID",
+      "default": null
+    },
+    {
+      "name": "conversation_summary",
+      "type": "string",
+      "description": "지금까지의 대화 요약",
+      "default": ""
+    }
+  ]
+}
