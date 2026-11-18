@@ -1,0 +1,29 @@
+dhub-runner
+Copyright (c) 2026 Dtonic Inc.
+
+This product is licensed under the MIT License (see LICENSE).
+
+This product depends on third-party open source software, each under its
+own license. They are installed as dependencies and are not modified. The
+complete list with versions and licenses is in the SBOM
+(docs/09_오픈소스사용내역_SBOM.pdf).
+
+Dependencies under weak copyleft licenses:
+  psycopg, psycopg-binary 3.3.6    LGPL-3.0-only
+  certifi 2026.10.23               MPL-2.0
+  orjson 3.13.0                    MPL-2.0 AND (Apache-2.0 OR MIT)
+
+Main dependencies under permissive licenses:
+  FastAPI, Polars, Pydantic, LangChain (core, openai, anthropic, google-genai)
+                                   MIT
+  deltalake, PyArrow, boto3, Kubernetes Python client
+                                   Apache-2.0
+  uvicorn, Starlette, httpx        BSD-3-Clause
+  cryptography                     Apache-2.0 OR BSD-3-Clause
+
+Distributed container images and services used at deployment:
+  python:3.12-slim, postgres:17-alpine, rustfs/rustfs:1.0.0
+  These images carry their own licenses.
+
+The web UI loads the Inter, Roboto and Fira Code fonts from Google Fonts at
+run time. The fonts are not included in this repository.
