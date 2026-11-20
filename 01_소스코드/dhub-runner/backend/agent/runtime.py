@@ -34,7 +34,7 @@ from langchain_core.messages import (
     messages_to_dict,
 )
 
-from .tools import SPECS, Tools, builtin_name, is_dhub2_builtin
+from .tools import SPECS, Tools, builtin_name, is_platform_builtin
 
 log = logging.getLogger(__name__)
 
@@ -179,7 +179,7 @@ class Agent:
         doc = self.collection.find("tool", ref.get("id")) or self.collection.find(
             "tool", ref.get("name")
         )
-        if doc is not None and not is_dhub2_builtin(doc, name):
+        if doc is not None and not is_platform_builtin(doc, name):
             return False
         if self.storage is None:
             raise AgentError(f"agent {self.name!r}: tool {name!r} needs the collection's tables")

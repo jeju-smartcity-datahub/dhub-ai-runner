@@ -140,7 +140,7 @@ def test_text2sql_turn(agent):
     assert json.loads(model.seen[-1][-1].content)["rows"] == [{"total": 600}]
 
 
-def test_dhub2_builtin_refs_and_settings(tmp_path, monkeypatch):
+def test_platform_builtin_refs_and_settings(tmp_path, monkeypatch):
     """An exported agent refers to the builtins by id (agent.tool.<name>), maybe
     with D.Hub for AI's own manifest of the builtin in the collection; its settings apply."""
     monkeypatch.setattr(runtime, "create_chat_model", lambda spec, **kw: ScriptedModel(replies=[]))

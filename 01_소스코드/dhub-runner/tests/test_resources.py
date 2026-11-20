@@ -262,7 +262,7 @@ def test_mcp_is_not_supported(tmp_path, monkeypatch):
 # -- LLM models ----------------------------------------------------------------
 
 
-def test_llm_model_as_dhub2_returns_it(tmp_path):
+def test_llm_model_as_platform_returns_it(tmp_path):
     # D.Hub for AI never returns the key; the runner reads it from a secret named after the model.
     write(
         tmp_path,

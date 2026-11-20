@@ -134,7 +134,7 @@ def builtin_name(ref: dict[str, Any]) -> str | None:
     return None
 
 
-def is_dhub2_builtin(doc: dict[str, Any], name: str) -> bool:
+def is_platform_builtin(doc: dict[str, Any], name: str) -> bool:
     """Whether a collection's tool definition is D.Hub for AI's builtin rather than the
     collection's own tool of the same name."""
     return bool(doc.get("is_builtin")) or doc.get("id") == f"agent.tool.{name}"
