@@ -173,9 +173,9 @@ function secretForm(el, rows, save) {
           <td><input data-secret="${esc(x.secret)}/${esc(x.key)}" type="password" autocomplete="off" placeholder="${x.source ? "바꾸려면 입력 (지우려면 공백 한 칸)" : "값 입력"}"></td></tr>`).join("")}</table>`
         : `<div class="hint">시크릿이 없습니다.</div>`}
       <label for="secret-new">시크릿 추가</label>
-      <div class="row"><input id="secret-new" type="text" placeholder="시크릿/키 (예: dhub2_llm/base_url)" style="flex:1"><input id="secret-new-value" type="password" placeholder="값" style="flex:1"></div>
+      <div class="row"><input id="secret-new" type="text" placeholder="시크릿/키 (예: dhub_llm/base_url)" style="flex:1"><input id="secret-new-value" type="password" placeholder="값" style="flex:1"></div>
       <label for="secret-bulk">여러 개 한 번에 입력</label>
-      <textarea id="secret-bulk" rows="4" class="mono" autocomplete="off" spellcheck="false" placeholder="dhub2_llm/api_key=...&#10;crm/token=..."></textarea>
+      <textarea id="secret-bulk" rows="4" class="mono" autocomplete="off" spellcheck="false" placeholder="dhub_llm/api_key=...&#10;crm/token=..."></textarea>
       <div class="hint">한 줄에 <code>시크릿/키=값</code> 하나씩. 값을 비우면 그 키를 지웁니다. 값은 암호화해 저장되고 다시 보여주지 않습니다.</div>
       <div class="form-actions"><button class="button primary" type="submit">저장</button></div>
     </form>`;

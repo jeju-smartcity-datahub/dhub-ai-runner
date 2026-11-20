@@ -54,7 +54,7 @@ Agent = Annotated[str, Path(description="에이전트 이름 또는 id", example
 class SecretValues(BaseModel):
     values: dict[str, str | None] = Field(
         description="`<시크릿>/<키>`마다 값. null이나 빈 문자열이면 그 키를 지웁니다.",
-        examples=[{"dhub2_llm/base_url": "http://vllm:8000/v1", "dhub2_llm/api_key": None}],
+        examples=[{"dhub_llm/base_url": "http://vllm:8000/v1", "dhub_llm/api_key": None}],
     )
 
 

@@ -105,7 +105,7 @@ uv run dhub-runner --data data web            # http://127.0.0.1:8080, 컬렉션
 # UI 없이 컬렉션 하나
 export RUNNER_COLLECTION_DIR=examples/quickstart RUNNER_DATA_DIR=data
 uv run dhub-runner check                      # 컬렉션 검증 + 값이 없는 시크릿 확인
-echo -n "$KEY" | uv run dhub-runner secret set dhub2_llm/api_key   # 시크릿 입력 (--shared: 공용)
+echo -n "$KEY" | uv run dhub-runner secret set dhub_llm/api_key   # 시크릿 입력 (--shared: 공용)
 uv run dhub-runner pipeline run orders
 uv run dhub-runner agent chat sales_assistant # 터미널 대화 (승인 프롬프트 포함)
 uv run dhub-runner agent serve --port 8000
@@ -367,7 +367,7 @@ API:
 | [city-monitor](examples/city-monitor) | 공개 REST API 세 곳(Open-Meteo 날씨·대기질, USGS 지진)에서 스크립트 커넥터로 수집 → stages·join으로 도시별 일간 요약 → `@use_llm` 코드 스텝에서 Gemma 4가 위험 수준과 경보를 분석해 `insights`에 저장(매시 실행). 대화용 에이전트 `city_assistant`는 실시간 날씨·지진을 툴로 조회하고, `city_analyst`는 쌓인 데이터셋을 SQL로 조회(text2sql) | 인터넷, Gemma 4 엔드포인트 |
 
 예제의 에이전트와 LLM 스텝은 모두 각 컬렉션의 `llm/gemma4.json`(Gemma 4 31B IT)을 씁니다.
-OpenAI 호환 엔드포인트(vLLM, Ollama 등)로 부르며, 주소와 키는 시크릿 `dhub2_llm/base_url`, `dhub2_llm/api_key`에서 읽습니다.
+OpenAI 호환 엔드포인트(vLLM, Ollama 등)로 부르며, 주소와 키는 시크릿 `dhub_llm/base_url`, `dhub_llm/api_key`에서 읽습니다.
 웹 UI의 **시크릿**(공용)에 한 번 넣으면 모든 컬렉션이 씁니다. 다른 모델을 쓰려면 이 파일만 바꾸면 됩니다.
 
 ## 개발

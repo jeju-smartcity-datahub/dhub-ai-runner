@@ -32,7 +32,7 @@ class MemorySecretStore:
 
 # The examples' gemma4 model reads its endpoint and key from these secrets;
 # tests replace the model itself, so any address will do.
-EXAMPLE_SECRETS = {"dhub2_llm": {"base_url": "http://127.0.0.1:9/v1", "api_key": "test"}}
+EXAMPLE_SECRETS = {"dhub_llm": {"base_url": "http://127.0.0.1:9/v1", "api_key": "test"}}
 
 
 def example_secrets():

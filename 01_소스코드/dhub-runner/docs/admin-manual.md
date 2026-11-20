@@ -152,7 +152,7 @@ Kubernetes 모드에서는 `RUNNER_DATABASE_URL`, `RUNNER_SECRET_KEY`, `s3://` �
 - 값 입력: 웹 UI(공용 **시크릿** 메뉴, 컬렉션의 **시크릿** 탭), API `PUT /api/secrets`·`PUT /api/collections/{name}/secrets`, CLI.
 
   ```bash
-  echo -n "$KEY" | dhub-runner secret set dhub2_llm/api_key --shared     # 공용
+  echo -n "$KEY" | dhub-runner secret set dhub_llm/api_key --shared     # 공용
   echo -n "$TOKEN" | dhub-runner --collection demo secret set crm/token    # 컬렉션
   dhub-runner secret list --shared
   dhub-runner --collection demo secret delete crm/token
