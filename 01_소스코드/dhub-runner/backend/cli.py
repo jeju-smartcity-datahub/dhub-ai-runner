@@ -300,7 +300,11 @@ def _web(args: argparse.Namespace) -> int:
         # Pods share collections and tables through RustFS, and secrets and state
         # through Postgres; a key generated per pod could not read the secrets.
         missing = [n for n in ("RUNNER_DATABASE_URL", "RUNNER_SECRET_KEY") if not os.environ.get(n)]
-        if missing or not workspace.collections.startswith("s3://"):
+        if (
+            missing
+            or not workspace.collections.startswith("s3://")
+            or not workspace.tables.startswith("s3://")
+        ):
             raise SystemExit(
                 "RUNNER_EXECUTOR=kubernetes needs RUNNER_COLLECTIONS/RUNNER_TABLES on s3:// "
                 f"and {', '.join(missing) or 'the settings above'}"

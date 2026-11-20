@@ -205,3 +205,41 @@ def test_names_are_valid_and_stable():
     )
     assert all(c.isalnum() and c.islower() or c.isdigit() or c == "-" for c in name)
     assert k8s.label("a/b:c" * 30).replace("-", "").isalnum()
+
+
+@pytest.mark.parametrize(
+    "collections, tables",
+    [
+        ("/srv/collections", "s3://dhub-runner/tables"),
+        ("s3://dhub-runner/collections", "/srv/tables"),
+        ("/srv/collections", "/srv/tables"),
+    ],
+)
+def test_kubernetes_mode_requires_s3_collections_and_tables(
+    tmp_path, monkeypatch, collections, tables
+):
+    """Pods share both through RustFS, so a local path on either one is refused.
+
+    The workspace is stubbed so the guard can be reached without Postgres.
+    """
+    import cli
+    import web.workspace
+
+    monkeypatch.setattr(
+        web.workspace,
+        "Workspace",
+        lambda collections, tables, data_dir: ns(collections=collections, tables=tables),
+    )
+    monkeypatch.setenv("RUNNER_EXECUTOR", "kubernetes")
+    monkeypatch.setenv("RUNNER_DATABASE_URL", "postgresql://runner@localhost/runner")
+    monkeypatch.setenv("RUNNER_SECRET_KEY", "k" * 44)
+    args = ns(
+        collections=collections,
+        tables=tables,
+        data=str(tmp_path),
+        host="127.0.0.1",
+        port=8080,
+    )
+    with pytest.raises(SystemExit) as err:
+        cli._web(args)
+    assert "RUNNER_COLLECTIONS/RUNNER_TABLES on s3://" in str(err.value)
