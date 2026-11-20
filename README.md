@@ -18,7 +18,7 @@ D.Hub for AI에서 내보낸 컬렉션(파이프라인·에이전트)을 가져�
 
 | No | 문서 | 파일 |
 |---|---|---|
-| 1 | 소스코드 구성 | [docs/01_소스코드.pdf](docs/01_소스코드.pdf) |
+| 1 | 소스코드 구성 | [01_소스코드/dhub2-runner/](01_소스코드/dhub2-runner/) |
 | 2 | 설치·배포 가이드(인프라 요구사항 포함) | [docs/02_설치배포가이드.pdf](docs/02_설치배포가이드.pdf) |
 | 3 | 빌드 스크립트·실행 환경(Docker Compose, Kubernetes Manifest) | [docs/03_빌드스크립트_실행환경.pdf](docs/03_빌드스크립트_실행환경.pdf) |
 | 4 | API 명세서 및 호출 예제(cURL, Python) | [docs/04_API명세서_호출예제.pdf](docs/04_API명세서_호출예제.pdf) |
