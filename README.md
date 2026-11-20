@@ -4,7 +4,7 @@
 
 D.Hub for AI에서 내보낸 컬렉션(파이프라인·에이전트)을 가져와, 인증·권한·클러스터 없이 로컬, Docker Compose, Kubernetes 환경에서 실행하는 경량 실행기입니다.
 
-> 현재 공개 문서 10종을 먼저 등록했으며, 소스코드는 보안 취약점·라이선스 점검을 마친 뒤 추가합니다.
+소스코드는 [01_소스코드/dhub2-runner/](01_소스코드/dhub2-runner/)에, 공개 문서 9종(PDF)은 [docs/](docs/)에 있습니다.
 
 ## 공개 범위
 
@@ -32,6 +32,7 @@ D.Hub for AI에서 내보낸 컬렉션(파이프라인·에이전트)을 가져�
 ## 빠른 시작
 
 ```bash
+cd 01_소스코드/dhub2-runner
 cp .env.example .env
 docker compose up -d --build     # http://localhost:8080
 ```
