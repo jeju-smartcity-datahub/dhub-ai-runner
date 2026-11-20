@@ -4,7 +4,7 @@
 
 D.Hub for AI에서 내보낸 컬렉션(파이프라인·에이전트)을 가져와, 인증·권한·클러스터 없이 로컬, Docker Compose, Kubernetes 환경에서 실행하는 경량 실행기입니다.
 
-소스코드는 [01_소스코드/dhub2-runner/](01_소스코드/dhub2-runner/)에, 공개 문서 9종(PDF)은 [docs/](docs/)에 있습니다.
+소스코드는 [01_소스코드/dhub-runner/](01_소스코드/dhub-runner/)에, 공개 문서 9종(PDF)은 [docs/](docs/)에 있습니다.
 
 ## 공개 범위
 
@@ -18,7 +18,7 @@ D.Hub for AI에서 내보낸 컬렉션(파이프라인·에이전트)을 가져�
 
 | No | 문서 | 파일 |
 |---|---|---|
-| 1 | 소스코드 구성 | [01_소스코드/dhub2-runner/](01_소스코드/dhub2-runner/) |
+| 1 | 소스코드 구성 | [01_소스코드/dhub-runner/](01_소스코드/dhub-runner/) |
 | 2 | 설치·배포 가이드(인프라 요구사항 포함) | [docs/02_설치배포가이드.pdf](docs/02_설치배포가이드.pdf) |
 | 3 | 빌드 스크립트·실행 환경(Docker Compose, Kubernetes Manifest) | [docs/03_빌드스크립트_실행환경.pdf](docs/03_빌드스크립트_실행환경.pdf) |
 | 4 | API 명세서 및 호출 예제(cURL, Python) | [docs/04_API명세서_호출예제.pdf](docs/04_API명세서_호출예제.pdf) |
@@ -32,7 +32,7 @@ D.Hub for AI에서 내보낸 컬렉션(파이프라인·에이전트)을 가져�
 ## 빠른 시작
 
 ```bash
-cd 01_소스코드/dhub2-runner
+cd 01_소스코드/dhub-runner
 cp .env.example .env
 docker compose up -d --build     # http://localhost:8080
 ```
