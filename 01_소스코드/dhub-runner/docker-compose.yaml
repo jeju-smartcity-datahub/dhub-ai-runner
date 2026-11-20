@@ -15,10 +15,11 @@
 #
 # Only infrastructure is configured through environment variables (RustFS,
 # Postgres, RUNNER_SECRET_KEY); secrets are entered in the UI or with
-# `docker compose exec web dhub-runner secret set <secret>/<key>`.
+# `echo -n "$VALUE" | docker compose exec -T web dhub-runner secret set <secret>/<key> --shared`.
 #
-# Run state (step checkpoints, run history, agent sessions) stays in the
-# runner-data volume.
+# Compose passes RUNNER_DATABASE_URL, so run state (step checkpoints, run
+# history, agent sessions), the secrets and the dataset catalog are stored in
+# Postgres; the runner-data volume only holds local working files.
 
 x-s3: &s3
   AWS_ENDPOINT_URL: http://rustfs:9000

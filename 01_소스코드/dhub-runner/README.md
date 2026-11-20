@@ -82,7 +82,8 @@ docker compose exec pipeline-runner dhub-runner pipeline run orders
 
 ```bash
 docker build -t <registry>/dhub-runner:<tag> . && docker push <registry>/dhub-runner:<tag>
-# runner.yaml의 runner-env(인프라 자격증명), runner-config(RUNNER_K8S_IMAGE 등)를 채운 뒤
+# runner.yaml의 runner-env(인프라 자격증명), runner-config(RUNNER_K8S_IMAGE 등)를 채우고,
+# Deployment dhub-runner-web의 image를 위에서 올린 <registry>/dhub-runner:<tag>로 바꾼 뒤
 kubectl apply -n <namespace> -f deploy/k8s/runner.yaml
 ```
 
@@ -115,7 +116,7 @@ uv run dhub-runner agent serve --port 8000
 
 ```bash
 export AWS_ENDPOINT_URL=http://localhost:9000 AWS_ACCESS_KEY_ID=rustfsadmin AWS_SECRET_ACCESS_KEY=rustfsadmin
-export RUNNER_COLLECTION_DIR=s3://dhub-runner/collections/quickstart RUNNER_TABLES=s3://dhub-runner/tables
+export RUNNER_COLLECTION_DIR=s3://dhub-runner/collections/quickstart RUNNER_TABLES=s3://dhub-runner/tables/quickstart
 uv run dhub-runner collection push examples/quickstart
 uv run dhub-runner pipeline run orders
 ```
@@ -373,8 +374,8 @@ OpenAI 호환 엔드포인트(vLLM, Ollama 등)로 부르며, 주소와 키는 �
 ## 개발
 
 ```bash
-uv sync
-uv run pytest
+uv sync --extra k8s
+uv run --extra k8s pytest
 ```
 
 ## 라이선스

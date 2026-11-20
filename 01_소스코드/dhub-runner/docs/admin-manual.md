@@ -47,7 +47,7 @@ dhub-runner를 설치하고, 설정하고, 운영하는 방법을 설명합니�
 ```bash
 cp .env.example .env
 # .env: RUSTFS_ACCESS_KEY, RUSTFS_SECRET_KEY, POSTGRES_PASSWORD, RUNNER_SECRET_KEY 를 바꿉니다
-python -c "from cryptography.fernet import Fernet; print(Fernet.generate_key().decode())"  # RUNNER_SECRET_KEY 값
+docker compose run --rm --no-deps --entrypoint python web -c "from cryptography.fernet import Fernet; print(Fernet.generate_key().decode())"  # RUNNER_SECRET_KEY 값
 docker compose up -d --build
 ```
 
@@ -157,7 +157,7 @@ Kubernetes 모드에서는 `RUNNER_DATABASE_URL`, `RUNNER_SECRET_KEY`, `s3://` �
   dhub-runner secret list --shared
   dhub-runner --collection demo secret delete crm/token
   ```
-  docker compose에서는 `docker compose exec web dhub-runner secret set …`.
+  docker compose에서는 `echo -n "$KEY" | docker compose exec -T web dhub-runner secret set dhub_llm/api_key --shared`처럼 `-T`를 붙여 파이프로 넘깁니다.
 - `api_key_env`, `credentials_env`처럼 환경변수에서 값을 읽는 설정은 이유와 함께 거부합니다. `api_key_ref`, `<옵션>_ref`를 쓰게 하세요.
 - **마스터 키(`RUNNER_SECRET_KEY`)를 잃으면 저장된 시크릿을 읽을 수 없습니다.** 키는 시크릿 관리 도구에 따로 보관하고, 운영 환경에서는 반드시 명시적으로 설정하세요.
 - 키를 바꿔야 하면 모든 시크릿을 새 키로 다시 입력해야 합니다(자동 재암호화는 없습니다).
