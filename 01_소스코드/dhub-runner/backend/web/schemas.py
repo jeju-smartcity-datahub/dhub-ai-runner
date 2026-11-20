@@ -11,7 +11,7 @@ from fastapi import Path
 from pydantic import BaseModel, ConfigDict, Field
 
 DESCRIPTION = """
-D.Hub for AI에서 내보낸 컬렉션의 파이프라인과 에이전트를 실행하는 런너의 API입니다.
+D.Hub for AI에서 내보낸 컬렉션의 파이프라인과 에이전트를 실행하는 러너의 API입니다.
 
 - 컬렉션은 이름으로 가리킵니다. 경로의 `{name}`이 컬렉션 이름입니다.
 - 오류는 `{"detail": "..."}`로 옵니다. 없는 대상은 404, 실행할 수 없는 정의나 잘못된 값은 422,

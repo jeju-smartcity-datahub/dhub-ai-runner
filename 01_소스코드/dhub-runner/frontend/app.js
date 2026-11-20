@@ -279,7 +279,7 @@ function importReport(report) {
     <h2>결과</h2>
     ${report.secrets && report.secrets.length ? `<div class="alert">${icon("alert")}<div>입력이 필요한 시크릿: ${report.secrets.map((e) => `<code>${esc(e)}</code>`).join(" ")} — <a href="#/collections/${enc(report.name)}/secrets">시크릿 입력</a></div></div>` : ""}
     <div class="table-card"><table><tr><th>가져온 리소스</th><th>이름</th></tr>${rows(report.imported)}</table></div>
-    ${Object.keys(report.skipped || {}).length ? `<h2>건너뛴 리소스 <span class="count">런너가 실행하지 않음</span></h2><div class="table-card"><table><tr><th>종류</th><th>이름</th></tr>${rows(report.skipped)}</table></div>` : ""}
+    ${Object.keys(report.skipped || {}).length ? `<h2>건너뛴 리소스 <span class="count">러너가 실행하지 않음</span></h2><div class="table-card"><table><tr><th>종류</th><th>이름</th></tr>${rows(report.skipped)}</table></div>` : ""}
     ${report.data && report.data.length ? `<h2>초기 데이터</h2><p>${report.data.map((d) => entityPill("dataset", d)).join(" ")}</p>` : ""}
     <div class="form-actions"><a class="button primary" href="#/collections/${enc(report.name)}">${icon("collection")}${esc(report.name)} 열기</a></div>`;
 }

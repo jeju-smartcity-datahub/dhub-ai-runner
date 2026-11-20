@@ -1,6 +1,6 @@
 # dhub-runner
 
-D.Hub for AI에서 만든 **파이프라인과 에이전트를 그대로 실행만** 하는 가벼운 런너입니다.
+D.Hub for AI에서 만든 **파이프라인과 에이전트를 그대로 실행만** 하는 가벼운 러너입니다.
 D.Hub for AI에서 내보낸 컬렉션을 가져오면, 인증·권한·클러스터 없이 로컬이나
 docker compose로 실행할 수 있습니다.
 
@@ -157,7 +157,7 @@ D.Hub for AI 리소스 JSON(API 응답, 내보내기의 `manifests/`)을 그대�
 
 ## 컬렉션 디렉터리
 
-런너는 컬렉션 하나를 디렉터리 하나에 둡니다. 리소스 JSON 파일을 종류별 디렉터리에 나눠 둔 것입니다.
+러너는 컬렉션 하나를 디렉터리 하나에 둡니다. 리소스 JSON 파일을 종류별 디렉터리에 나눠 둔 것입니다.
 웹 앱에서는 모든 컬렉션이 `RUNNER_COLLECTIONS/<컬렉션 이름>/`에 있고, 명령줄에서는 `--collection-dir`로 하나를 가리킵니다.
 리소스는 **이름**으로 참조하며, 내보낸 manifest처럼 `id`로 참조해도 찾습니다.
 
@@ -179,7 +179,7 @@ agents/*.json  tools/*.json + .py  actors/*.json + .py  prompts/*.json
 
 ### D.Hub for AI 컬렉션 가져오기
 
-D.Hub for AI 포탈에서 컬렉션을 내보낸 ZIP을 받아 런너의 컬렉션 디렉터리로 바꿉니다. 압축을 푼 디렉터리를 줘도 됩니다.
+D.Hub for AI 포탈에서 컬렉션을 내보낸 ZIP을 받아 러너의 컬렉션 디렉터리로 바꿉니다. 압축을 푼 디렉터리를 줘도 됩니다.
 
 ```bash
 dhub-runner import demo-export.zip collections/demo                              # 로컬 컬렉션
@@ -201,8 +201,8 @@ docker compose run --rm -v ./demo-export.zip:/export.zip:ro collection-init \
 - 값은 가져온 뒤 웹 UI나 `dhub-runner secret set`으로 입력합니다.
 
 **결과 보고**
-- 명령이 끝나면 가져온 리소스, 건너뛴 리소스(폴더, 대시보드, 지식 등 런너가 실행하지 않는 종류), 적재할 데이터, 입력이 필요한 시크릿을 JSON으로 출력합니다.
-- 이어서 `dhub-runner check`를 돌리면 런너가 지원하지 않는 기능을 쓰는 파이프라인과 에이전트를 알 수 있습니다.
+- 명령이 끝나면 가져온 리소스, 건너뛴 리소스(폴더, 대시보드, 지식 등 러너가 실행하지 않는 종류), 적재할 데이터, 입력이 필요한 시크릿을 JSON으로 출력합니다.
+- 이어서 `dhub-runner check`를 돌리면 러너가 지원하지 않는 기능을 쓰는 파이프라인과 에이전트를 알 수 있습니다.
 
 ## 파이프라인
 
@@ -228,7 +228,7 @@ docker compose run --rm -v ./demo-export.zip:/export.zip:ro collection-init \
 - `partition`
 - 그 밖의 `@use_*` 데코레이터
 - `rrule` 스케줄
-- `agent` 스텝: D.Hub for AI는 workflow 에이전트만 스텝에서 부를 수 있고, 런너는 workflow 에이전트를 지원하지 않습니다. LLM 호출은 `@use_llm` 코드 스텝이나 transform `llm`으로 합니다.
+- `agent` 스텝: D.Hub for AI는 workflow 에이전트만 스텝에서 부를 수 있고, 러너는 workflow 에이전트를 지원하지 않습니다. LLM 호출은 `@use_llm` 코드 스텝이나 transform `llm`으로 합니다.
 - 일부 내장 드라이버 커넥터 (위 "리소스별 지원" 참고)
 
 스텝은 의존 순서대로 하나씩 실행합니다. 스텝별 상태와 CDC 오프셋은 `pipeline status`로 보고,
@@ -257,7 +257,7 @@ docker compose run --rm -v ./demo-export.zip:/export.zip:ro collection-init \
 
 ### 데이터셋 조회 (text2sql)
 
-에이전트의 `tools`에 아래 이름(또는 D.Hub for AI builtin id `agent.tool.<이름>`)을 넣으면, 런너가 컬렉션의 Delta 테이블(RustFS `s3://.../tables/<컬렉션>/<데이터셋>` 또는 로컬 디렉터리)을 직접 읽어 답합니다.
+에이전트의 `tools`에 아래 이름(또는 D.Hub for AI builtin id `agent.tool.<이름>`)을 넣으면, 러너가 컬렉션의 Delta 테이블(RustFS `s3://.../tables/<컬렉션>/<데이터셋>` 또는 로컬 디렉터리)을 직접 읽어 답합니다.
 D.Hub for AI에서는 같은 툴이 D.Hub for AI API와 ClickHouse 미러로 답하므로, 이 툴을 쓰는 D.Hub for AI 에이전트는 내보낸 그대로 실행됩니다.
 
 | 툴 | 하는 일 |
