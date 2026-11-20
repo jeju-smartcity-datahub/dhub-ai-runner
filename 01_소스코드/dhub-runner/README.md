@@ -147,7 +147,7 @@ D.Hub for AI 리소스 JSON(API 응답, 내보내기의 `manifests/`)을 그대�
 | 데이터셋 (`dataset`) | `delta`. 스키마(`schema.fields`)대로 초기 데이터의 타입을 맞춤 | `object`, `kafka`, `rest` 데이터셋 |
 | 코드 (`code`) | `python`(`run`), `sql`(Polars SQL). 본문은 `<이름>.py`/`.sql` | |
 | 파이프라인 (`pipeline`) | 아래 "파이프라인" 참고 | |
-| 커넥터 (`connector`) | 스크립트 커넥터, 내장 드라이버 `http`(none·basic·bearer·api_key·OAuth2 client credentials), `postgres`. 자격증명은 `<옵션>_ref: secret://...` | `mcp`, `clickhouse`, `qdrant`, `dhub2_manager_api`, `datahub`, `semantic`, `neo4j`, `oracle`, `ngsild` |
+| 커넥터 (`connector`) | 스크립트 커넥터, 내장 드라이버 `http`(none·basic·bearer·api_key·OAuth2 client credentials), `postgres`. 자격증명은 `<옵션>_ref: secret://...` | `mcp`, `clickhouse`, `qdrant`, `datahub`, `semantic`, `neo4j`, `oracle`, `ngsild` |
 | LLM 모델 (`llm.model`) | `openai`(호환 엔드포인트 포함), `claude`, `gemini`. 키는 시크릿(`api_key_ref`, 없으면 `<모델>/api_key`). 시크릿 `<모델>/base_url`이 있으면 컬렉션을 고치지 않고 주소를 바꿈 | D.Hub for AI가 직접 배포한 모델(`type: internal`)은 `<모델>/base_url`을 넣어야 실행 |
 | 에이전트 (`agent`) | 아래 "에이전트" 참고 | |
 | 툴·액터 (`agent.tool`, `agent.actor`) | `python`(`execute`), 데이터셋 builtin 툴(아래 "데이터셋 조회 (text2sql)") | `mcp` 툴, `agent`·`workflow` 툴(건너뜀, roles 사용) |

@@ -176,13 +176,13 @@ def test_drivers_that_cannot_run_here(tmp_path):
     write(
         tmp_path,
         "connectors/m.json",
-        {"name": "m", "type": "rest", "driver": "dhub2_manager_api", "options": {}},
+        {"name": "m", "type": "rest", "driver": "datahub", "options": {}},
     )
     write(
         tmp_path, "connectors/x.json", {"name": "x", "type": "rest", "driver": "ftp", "options": {}}
     )
     resources = Resources(Collection(tmp_path))
-    with pytest.raises(ScriptError, match="calls the D.Hub for AI API"):
+    with pytest.raises(ScriptError, match="internal ClickHouse"):
         resources.connector("m")
     for driver in ("clickhouse", "qdrant"):
         write(

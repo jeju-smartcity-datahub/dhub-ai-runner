@@ -21,7 +21,6 @@ DRIVERS = {
 
 # D.Hub for AI builtins that only make sense inside D.Hub for AI itself.
 NOT_PORTABLE = {
-    "dhub2_manager_api": "it calls the D.Hub for AI API",
     "datahub": "it reads D.Hub for AI's internal ClickHouse",
     "semantic": "the semantic layer is not supported",
     "neo4j": "ontology graphs are not supported",
